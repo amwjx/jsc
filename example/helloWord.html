@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>example</title>
+<script type="text/javascript">
+;(function (win,doc,seajs,mod,tmp,retry) {
+	if(win[seajs]) {return ;}
+	function fn(n,t) {return function () {mod.push(n,arguments);};}
+	retry = 0;
+	function cre(el,head,tit,wap) {
+		retry = retry+1;
+		var done;
+		el = doc.getElementById(seajs+'node');
+		el && el.parentNode.removeChild(el);
+		el = doc.createElement('script');
+		el.id = seajs+'node';
+		el.src = './js/lib/sea-1.3.js?max_age=2592000&ver=20121105';
+		el.onerror = el.onreadystatechange = function () {
+			if(!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+				done=true;
+				if(!(win[seajs] && win[seajs].version)) {
+					if(retry<=2) {cre();}
+				}
+				el.onerror = el.onreadystatechange = null;
+			}
+		};
+		head = doc.getElementsByTagName('head')[0];
+		tit = head && head.getElementsByTagName('title');
+		wap = (tit && tit[0]) || head.firstChild;
+		head.insertBefore(el,wap);
+	}
+	win[seajs] = tmp = {args:(mod=[]),config:fn(0,tmp),use:fn(1,tmp)};
+	win.define = fn(2);
+	cre();
+})(window,document,'seajs');
+
+seajs.config({
+	base: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+	charset:'utf-8',
+	timeout:5*60*1000,
+	debug:0,
+	alias:{
+		'example.v1' : window.location.href.replace(/\/[^\/]+$/,'') + '/js/'
+	}
+});
+</script>
+</head>
+<body>
+</body>
+<script>
+seajs.use('example.v1/module/helloWord/index',function(index){
+	index.get('./init').init();
+});
+</script>
+</html>

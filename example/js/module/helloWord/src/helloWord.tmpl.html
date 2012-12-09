@@ -1,0 +1,19 @@
+<script id="pageBody" type="text/html" nowith="yes">
+<div style="width: 400px; padding: 50px; font-size: 48px; margin: 0 auto; text-align: center; font-weight: bold;">
+	<%=tmpl.world()%>
+</div>
+</script>
+
+<script id="world" type="text/html" nowith="yes">
+<%
+	var str = 'Hello World!',
+		colors = ['red','yellow','blue','black','#F0F','#0FF'],
+		color,
+		i,len;
+	
+	for(i = 0, len = str.length; i<len ;i++){
+		color = colors[i % colors.length];
+		%><span style="color:<%=color%>"><%=str.charAt(i)%></span><%
+	}
+%>
+</script>
