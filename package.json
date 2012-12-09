@@ -1,0 +1,16 @@
+{
+  "name"          : "jsc",
+  "version"       : "1.2.0",
+  "description"   : "Javascript Seajs Compiler",
+  "homepage"      : "https://github.com/amwjx/jsc",
+  "keywords"      : ["seajs", "module", "commonjs", "browser", "nodejs"],
+  "author"        : "Youkun Huang <345680969@qq.com>",
+  "engines"       : {"node": ">= 0.8.0"},
+  "dependencies"  : [],
+  "repository"    : {
+                      "type": "git",
+                      "url" : "https://github.com/amwjx/jsc.git"
+                    },
+  "main"          : "./jsc/index.js",
+  "preferGlobal"  : false
+}
