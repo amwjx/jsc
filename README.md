@@ -52,7 +52,6 @@ JavaScript Seajs Compiler.
 
 
 ## License
-Copyright © 2011 - 2013 Tencent.
 jsc is available under the terms of the [MIT License].
 
 
