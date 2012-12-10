@@ -10,6 +10,7 @@ JavaScript Seajs Compiler.
 2. 预编译html模板为./tmpl.js模块
 3. 监听文件改变自动编译
 4. 支持win7、linux
+5. 对跨目录合并说no
 
 
 ##1分钟上手
