@@ -25,7 +25,7 @@ JavaScript Seajs Compiler.
 
 1. 感谢`viktor`提供windows下鼠标右键功能
 1. 感谢`fly`修改jsc支持windows平台
-1. 感谢`link`关注google论坛最新动态
+1. 感谢`link、dolly、kim`关注google论坛最新动态
 1. 感谢`朋友网前端团队`陪jsc走过的这几年和未来几年
 1. 感谢`woods`推进jsc产生按配置文件打包的高级使用方式
 1. 感谢`johnnie、shine`在新photo项目中推进jsc转型为相对路径打包
