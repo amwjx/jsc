@@ -16,7 +16,7 @@ JavaScript Seajs Compiler.
 ##1分钟上手
 
 1. 安装`node-v0.8+`，保证全局命令node可用
-1. 保证bin下的命令全局可用，将`jsc/bin`添加到环境变量path中或其它方法(window、linux均可)
+1. 保证`jsc/bin`下的命令全局可用，将`jsc/bin`添加到环境变量path中或其它方法(window、linux均可)
 1. 打开命令行并进入到要合并的源代码目录
 1. 输入`jsc`并 回车
 
