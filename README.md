@@ -4,7 +4,7 @@ jsc
 JavaScript Seajs Compiler.
 
 
-##无亮点，不工具
+##无模板，不前端
 
 1. 按目录合并seajs模块，相对路径，一次合并到处运行，支持seajs 1.0|1.1|1.2|1.3|1.3+
 2. 预编译html模板为./tmpl.js模块
