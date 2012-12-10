@@ -25,13 +25,14 @@ JavaScript Seajs Compiler.
 
 1. 感谢`viktor`提供windows下鼠标右键功能
 1. 感谢`fly`修改jsc支持windows平台
-1. 感谢`link、dolly、kim`关注google论坛最新动态
+1. 感谢`link、dolly、kim`关注google论坛seajs最新动态
 1. 感谢`朋友网前端团队`陪jsc走过的这几年和未来几年
 1. 感谢`woods`推进jsc产生按配置文件打包的高级使用方式
 1. 感谢`johnnie、shine`在新photo项目中推进jsc转型为相对路径打包
 1. 感谢`相册团队`推进`去seajs root`化
-1. 感谢`yuni`推进jsc产生全新的打包方式，支持seajs各版本
+1. 感谢`yuni`推进jsc产生全新的打包方式，支持seajs最新版本
 1. 感谢`QQ空间QZFL团队`支持CMD规范
+1. 感谢`玉伯`关于seajs的深入交流
 
 ##谁在用
 
