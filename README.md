@@ -46,7 +46,7 @@ JavaScript Seajs Compiler.
 3. src/支持子目录：*.js：参与模块id的计算，以.分隔；*.tmpl.html：分类存放作用
 
 ##骨灰级玩家
-1. tmpl.js可运行于nodejs，用于前台模版瞬间转换为后台模板，来实现服务端同步输出页面(http://n.pengyou.com/index.php?mod=group)
+1. tmpl.js可运行于nodejs，用于前台模版瞬间转换为后台模板，直出页面(http://n.pengyou.com/index.php?mod=group)
 
 
 ## License
