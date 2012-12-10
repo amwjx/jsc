@@ -29,7 +29,7 @@ JavaScript Seajs Compiler.
 1. 感谢`朋友网前端团队`陪jsc走过的这几年和未来几年
 1. 感谢`woods`推进jsc产生按配置文件打包的高级使用方式
 1. 感谢`johnnie、shine`在新photo项目中推进jsc转型为相对路径打包
-1. 感谢`相册团队`推进去`seajs root`化
+1. 感谢`相册团队`推进`去seajs root`化
 1. 感谢`yuni`推进jsc产生全新的打包方式，支持seajs各版本
 1. 感谢`QQ空间QZFL团队`支持CMD规范
 
