@@ -46,7 +46,7 @@ jsc is available under the terms of the [MIT License].
 ##高级功能
 1. src/目录下放一个_config.js文件实现更灵活的合并，格式参见jsc/demo._config.js
 2. 重写合并后的模块：src/目录下放一个同名模块即可
-3. src/支持子目录，*.js：参与模块id的计算，以.分隔；*.tmpl.html：分类存放作用
+3. src/支持子目录：*.js：参与模块id的计算，以.分隔；*.tmpl.html：分类存放作用
 
 ##骨灰级玩家
 1. tmpl.js可运行于nodejs，用于前台模版瞬间转换为后台模板，来实现服务端同步输出页面
