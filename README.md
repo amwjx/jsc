@@ -1,10 +1,10 @@
 jsc
 ===
 
-javascript seajs compiler
+JavaScript Seajs Compiler.
 
 
-##Welcome to the jsc wiki!
+##无亮点，不工具
 
 1. 按目录合并seajs模块，相对路径，一次合并到处运行，支持seajs 1.0|1.1|1.2|1.3|1.3+
 2. 预编译html模板为./tmpl.js模块
@@ -39,9 +39,6 @@ javascript seajs compiler
 2. QQ相册
 
 
-## License
-jsc is available under the terms of the [MIT License].
-
 
 ##高级功能
 1. src/目录下放一个_config.js文件实现更灵活的合并，格式参见jsc/demo._config.js
@@ -52,4 +49,8 @@ jsc is available under the terms of the [MIT License].
 1. tmpl.js可运行于nodejs，用于前台模版瞬间转换为后台模板，来实现服务端同步输出页面(http://n.pengyou.com/index.php?mod=group)
 
 
-the end.
+## License
+jsc is available under the terms of the [MIT License].
+
+
+##The end.
