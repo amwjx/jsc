@@ -29,7 +29,7 @@ JavaScript Seajs Compiler.
 1. 感谢`朋友网前端团队`陪jsc走过的这几年和未来几年
 1. 感谢`woods`推进jsc产生按配置文件打包的高级使用方式
 1. 感谢`johnnie、shine`在新photo项目中推进jsc转型为相对路径打包
-1. 感谢相册团队推进去seajs root化
+1. 感谢`相册团队`推进去`seajs root`化
 1. 感谢`yuni`推进jsc产生全新的打包方式，支持seajs各版本
 1. 感谢`QQ空间QZFL团队`支持CMD规范
 
@@ -41,12 +41,12 @@ JavaScript Seajs Compiler.
 
 
 ##高级功能
-1. src/目录下放一个_config.js文件实现更灵活的合并，格式参见jsc/demo._config.js
+1. `src/`目录下放一个`_config.js`文件实现更灵活的合并，格式参见`jsc/demo._config.js`
 1. 重写合并后的模块：src/目录下放一个同名模块即可
-1. src/支持子目录：*.js：参与模块id的计算，以.分隔；*.tmpl.html：分类存放作用
+1. `src/`支持子目录：`*.js`：参与模块id的计算，以.分隔；`*.tmpl.html`：分类存放作用
 
 ##骨灰级玩家
-1. tmpl.js可运行于nodejs，用于前台模版瞬间转换角色为后台模板，直出页面(http://n.pengyou.com/index.php?mod=group)
+1. `tmpl.js`可运行于`nodejs`，用于前台模版瞬间转换角色为后台模板，直出页面(http://n.pengyou.com/index.php?mod=group)
 
 
 ## License
