@@ -43,7 +43,7 @@ JavaScript Seajs Compiler.
 ##高级功能
 1. `src/`目录下放一个`_config.js`文件实现更灵活的合并，格式参见`jsc/demo._config.js`
 1. 重写合并后的模块：src/目录下放一个同名模块即可
-1. `src/`支持子目录：`*.js`：参与模块id的计算，以.分隔；`*.tmpl.html`：分类存放作用
+1. `src/`支持子目录：`*.js`：参与模块id的计算，以`.`分隔；`*.tmpl.html`：分类存放作用
 
 ##骨灰级玩家
 1. `tmpl.js`可运行于`nodejs`，用于前台模版瞬间转换角色为后台模板，直出页面(http://n.pengyou.com/index.php?mod=group)
@@ -54,3 +54,4 @@ jsc is available under the terms of the [MIT License].
 
 
 ##The end.
+===
