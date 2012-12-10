@@ -22,14 +22,15 @@ javascript seajs compiler
 
 ##致谢
 
-1. 感谢viktor提供windows下鼠标右键功能
-2. 感谢link关注google论坛最新动态
-3. 感谢朋友网前端团队陪jsc走过的这几年和未来几年
-4. 感谢woods推进jsc产生按配置文件打包的高级使用方式
-5. 感谢johnnie、shine在新photo项目中推进jsc转型为相对路径打包
-6. 感谢相册团队推进去seajs root化
-7. 感谢yuni推进jsc产生全新的打包方式，支持seajs各版本
-8. 感谢QQ空间QZFL团队支持CMD规范
+9. 感谢viktor提供windows下鼠标右键功能
+8. 感谢fly修改jsc支持windows平台
+7. 感谢link关注google论坛最新动态
+6. 感谢朋友网前端团队陪jsc走过的这几年和未来几年
+5. 感谢woods推进jsc产生按配置文件打包的高级使用方式
+4. 感谢johnnie、shine在新photo项目中推进jsc转型为相对路径打包
+3. 感谢相册团队推进去seajs root化
+2. 感谢yuni推进jsc产生全新的打包方式，支持seajs各版本
+1. 感谢QQ空间QZFL团队支持CMD规范
 
 
 ##谁在用
@@ -40,6 +41,15 @@ javascript seajs compiler
 
 ## License
 jsc is available under the terms of the [MIT License].
+
+
+##高级功能
+1. src/目录下放一个_config.js文件实现更灵活的合并，格式参见jsc/demo._config.js
+2. 重写合并后的模块：src/目录下放一个同名模块即可
+3. src/支持子目录，*.js：参与模块id的计算，以.分隔；*.tmpl.html：分类存放作用
+
+##骨灰级玩家
+1. tmpl.js可运行于nodejs，用于前台模版瞬间转换为后台模板，来实现服务端同步输出页面
 
 
 the end.
