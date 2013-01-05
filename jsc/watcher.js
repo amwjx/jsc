@@ -52,7 +52,7 @@ module.exports = {
 							return;
 						}
 						
-						if(cache[str] && now - cache[str] < 10){
+						if(cache[str] && now - cache[str] < 50){
 							return;
 						}
 						
@@ -97,7 +97,7 @@ module.exports = {
 										return;
 									}
 									
-									if(cache[file] && now - cache[file] < 10){
+									if(cache[file] && now - cache[file] < 50){
 										return;
 									}
 									cache[file] = now;
