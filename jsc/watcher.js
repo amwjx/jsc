@@ -48,8 +48,6 @@ module.exports = {
 						var str = (v + '/' + file).replace(/[\/\\]/gmi,'/');
 						var now =  +new Date();
 						
-						logger.debug('now:' + now);
-						
 						if(!filter.test(str)){
 							return;
 						}
@@ -94,8 +92,6 @@ module.exports = {
 							fs.watchFile(file, function(file){
 								return function(curr, prev){
 									var now =  +new Date();
-									
-									logger.debug('now:' + now);
 									
 									if(!filter.test(file)){
 										return;
