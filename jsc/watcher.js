@@ -45,9 +45,10 @@ module.exports = {
 				
 				fs.watch(v,function(v){
 					return function(event,file){
-						
 						var str = (v + '/' + file).replace(/[\/\\]/gmi,'/');
 						var now =  +new Date();
+						
+						logger.debug('now:' + now);
 						
 						if(!filter.test(str)){
 							return;
@@ -71,52 +72,54 @@ module.exports = {
 			}catch(e){
 				
 			}finally{
-				list = tmp = fs.readdirSync(v);
+				if (/\//.test(__dirname)) {
+					list = tmp = fs.readdirSync(v);
 				
-				list.forEach(function(n,i){
-					
-					var file = (v + '/' + n).replace(/[\/\\]/gmi,'/');
-					
-					if(config.excludeFile.test(n)){
-						return;
-					}
-					
-					if(cache[file]){
-						return;
-					}
-					
-					cache[file] = true;
-					
-					try{
+					list.forEach(function(n,i){
 						
-						filter.test(file) &&
-						fs.watchFile(file, function(file){
-							return function(curr, prev){
-								var now =  +new Date();
-								
-								if(!filter.test(file)){
-									return;
-								}
-								
-								if(cache[file] && now - cache[file] < 10){
-									return;
-								}
-								cache[file] = now;
-								
-								logger.info('${event}: ${str}',{
-									event: 'change',
-									str: file
-								});
-								
-								callback('change',file);
-							}
-						}(file));
-					}catch(e){
+						var file = (v + '/' + n).replace(/[\/\\]/gmi,'/');
 						
-					}
+						if(config.excludeFile.test(n)){
+							return;
+						}
+						
+						if(cache[file]){
+							return;
+						}
+						
+						cache[file] = true;
+						
+						try{
+							filter.test(file) &&
+							fs.watchFile(file, function(file){
+								return function(curr, prev){
+									var now =  +new Date();
+									
+									logger.debug('now:' + now);
+									
+									if(!filter.test(file)){
+										return;
+									}
+									
+									if(cache[file] && now - cache[file] < 10){
+										return;
+									}
+									cache[file] = now;
+									
+									logger.info('${event}: ${str}',{
+										event: 'change',
+										str: file
+									});
+									
+									callback('change',file);
+								}
+							}(file));
+						}catch(e){
+							
+						}
+					});
 					
-					
-				});
+				}
 			}
 			
 			
