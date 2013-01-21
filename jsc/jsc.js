@@ -17,6 +17,7 @@ var logger		= require('./logger')(__filename),
 	fs			= require("fs"),
 	path		= require('path'),
 	jscTimes	= 0,
+	beforeCode,//_config.js内设置对象属性:before{name:xxx.js}必须放在合并js文件最前的js代码，例如seajs，不设置则没有
 	undefined;
 
 //https://github.com/seajs/seajs
@@ -188,12 +189,17 @@ function createALL(seajsRoot,modulePath){
 	});
 	
 	moduleStr = moduleStr.replace('define(function','define(' + JSON.stringify(tmp) + ',function');
-
+	var finalCode = moduleStr + res.join('');
+	
+	if(beforeCode){//前置代码加到最前面
+		finalCode = beforeCode + finalCode;
+	}
+	
 	if(res.length){
 		if(createOut){
 			fs.writeFileSync(
 				out,
-				(moduleStr + res.join('')).replace(/\r\n|\r|\n/gmi,"\r\n"),
+				finalCode.replace(/\r\n|\r|\n/gmi,"\r\n"),
 				'UTF-8'
 			);
 		}
@@ -328,10 +334,43 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 		logger.info('    ${m}  <--  ${n}',{ n: n, m: mname});
 
 		str = fs.readFileSync(modulePath + '/src/' + n,'UTF-8');
-
+		
 		//去除utf-8文件头的BOM标记
 		str = str.replace(/^[\ufeff\ufffe]/,'');
 		str = str.replace(/\r\n|\r|\n/gmi,"\r\n");
+		
+		//处理script嵌套问题
+		(function(){
+			
+			var arr = [];
+			
+			str = str.replace(/(<script\b)|(<\/script>)/gmi,function(curr,start,end){
+				
+				if(start){
+					if(arr.length){
+						arr.push(start);
+						return '<%="<scr" + "ipt"%>';
+					}else{
+						arr.push(start);
+						return curr;
+					}
+				}else if(end){
+					
+					if(arr.length === 1){
+						arr.length = arr.length - 1;
+						return curr;
+					}else if(arr.length  > 1){
+						arr.length = arr.length - 1;
+						return '<%="<\/scr" + "ipt>"%>';
+					}else{
+						return curr;
+					}
+				}
+				
+				return curr;
+			});
+			
+		})();
 
 		while(exec  =  reg.exec(str)){
 
@@ -464,7 +503,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 	if(outputJS && (fs.existsSync || path.existsSync)(modulePath + '/src/' + outputJS)){
 		//moduleStr = '';
 		
-		logger.warn('module redefine: ${file}',{
+		logger.warn('.......module redefine: ${file}',{
 			file: modulePath + '/src/' + outputJS
 		});
 	}
@@ -491,12 +530,21 @@ function createJS(seajsRoot,modulePath,packConfig){
 	res.push('\r\n//js file list:\r\n')
 	js.forEach(function(n,i){
 		
-		var str = modulePath + '/src/' + n;
+		if(packConfig.before){//找到需要前置的js如seajs，移除
+			var name = packConfig.before.name;
+			if(n && name && n.indexOf(name)>-1){
+				beforeCode = fs.readFileSync(modulePath + '/src/' + n,'UTF-8').replace(/^[\ufeff\ufffe]/,'').replace(/\r\n|\r|\n/gmi,"\r\n");
+				js.splice(i,1);	
+			}	
+		}else{
+			var str = modulePath + '/src/' + n;
 		
-		str = path.normalize(str).replace(/\\/gi,'/');
-		str = str.replace(/.*\/([^\/]+\/src\/.+)$/,'$1');
+			str = path.normalize(str).replace(/\\/gi,'/');
+			str = str.replace(/.*\/([^\/]+\/src\/.+)$/,'$1');
 		
-		res.push('//' + str + '\r\n');
+			res.push('//' + str + '\r\n');	
+		}
+		
 	});
 
 	res.push(config.beforeJS);
@@ -559,12 +607,14 @@ function createJS(seajsRoot,modulePath,packConfig){
 	res.push(config.afterJS);
 	
 	moduleStr = moduleStr.replace('define(function','define(' + JSON.stringify(packDependent) + ',function');
-
+	
+	var finalCode = moduleStr + res.join('');
+	
 	if(js.length){
 		if(createOut){
 			fs.writeFileSync(
 				out,
-				(moduleStr + res.join('')).replace(/\r\n|\r|\n/gmi,"\r\n"),
+				finalCode.replace(/\r\n|\r|\n/gmi,"\r\n"),
 				'UTF-8'
 			);
 		}
