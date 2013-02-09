@@ -344,12 +344,12 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 			
 			var arr = [];
 			
-			str = str.replace(/(<script\b)|(<\/script>)/gmi,function(curr,start,end){
+			str = str.replace(/(<script\b)|(\/script>)/gmi,function(curr,start,end){
 				
 				if(start){
 					if(arr.length){
 						arr.push(start);
-						return '<%="<scr" + "ipt"%>';
+						return '<scr<%%>ipt';
 					}else{
 						arr.push(start);
 						return curr;
@@ -361,7 +361,7 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 						return curr;
 					}else if(arr.length  > 1){
 						arr.length = arr.length - 1;
-						return '<%="<\/scr" + "ipt>"%>';
+						return '\/scr<%%>ipt>';
 					}else{
 						return curr;
 					}
