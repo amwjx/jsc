@@ -108,7 +108,7 @@ function createALL(seajsRoot,modulePath){
 		packConfig	= {},
 		outputALL	= config.outputALL,
 		createOut	= true,
-		uglify 		= true,
+		uglify		= packConfig.uglify === true,
 		packConfig = packConfig || {},
 		outputHTML	= config.outputHTML,
 		packDependent,
@@ -200,15 +200,15 @@ function createALL(seajsRoot,modulePath){
 	
 	if(res.length){
 		if(createOut){
-			var code = (moduleStr + res.join('')).replace(/\r\n|\r|\n/gmi,"\r\n");
+			finalCode = finalCode.replace(/\r\n|\r|\n/gmi,"\r\n");
 			// UglifyJS
 			if(uglify) {
-				code = uglifyJS(code);
+				finalCode = uglifyJS(code);
 			}
 			// 写入文件
 			fs.writeFileSync(
 				out,
-				code,
+				finalCode,
 				'UTF-8'
 			);
 		}
@@ -291,6 +291,7 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 		outputHTML	= config.outputHTML,
 		outputDir	= packConfig.dir || config.outputDir,
 		createOut	= false,
+		uglify		= packConfig.uglify === true,
 		out,
 		tmp,i,str,mname;
 	
@@ -499,6 +500,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 		outputJS	= config.outputJS,
 		outputDir	= packConfig.dir || config.outputDir,
 		createOut	= false,
+		uglify		= packConfig.uglify === true,
 		packDependent		= [],
 		packDependentMap	= {},
 		sortRes,
