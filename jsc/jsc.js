@@ -16,6 +16,7 @@ var logger		= require('./logger')(__filename),
 	q			= new Queue(),
 	fs			= require("fs"),
 	path		= require('path'),
+	cdnPath		= require('./cdn.path.js'),
 	uglifyParser= require("./lib/uglify-js").parser,
 	uglifyProc	= require("./lib/uglify-js").uglify,
 	jscTimes	= 0,
@@ -67,6 +68,8 @@ function jsc(opt){
 		var module = '';
 		
 		if(!/\/src\/.+/gmi.test(file)){
+			//发现有文件改变
+			cdnPath.modify(file);
 			return;
 		}
 		
@@ -175,7 +178,9 @@ function createALL(seajsRoot,modulePath){
 		
 		res.push('//' + str + '\r\n');
 	});
-	res.push('\r\n\r\n');
+	
+	//打印all file文件列表之后的空行，先注释掉
+	//res.push('\r\n\r\n');
 	
 
 	[].push.apply(res,resJS.res);
@@ -193,7 +198,7 @@ function createALL(seajsRoot,modulePath){
 		}
 	});
 	
-	moduleStr = moduleStr.replace('define(function','define(' + JSON.stringify(tmp) + ',function');
+	moduleStr = moduleStr.replace('define\x28function','define\x28' + JSON.stringify(tmp) + ',function');
 	var finalCode = moduleStr + res.join('');
 	
 	if(beforeCode){//前置代码加到最前面
@@ -213,6 +218,9 @@ function createALL(seajsRoot,modulePath){
 				finalCode,
 				'UTF-8'
 			);
+			
+			//补id补依赖
+			cdnPath.modify(out);
 		}
 	}else{
 		logger.info('${o} is empty!!!',{o : out});
@@ -273,6 +281,9 @@ function parseHTML(seajsRoot,modulePath,packConfig){
 
 		if(res){
 			fs.writeFileSync(modulePath + '/' + mname,res.result,'UTF-8');
+			
+			//补id补依赖
+			cdnPath.modify(modulePath + '/' + mname);
 		}
 	});
 
@@ -293,7 +304,7 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 		outputHTML	= config.outputHTML,
 		outputDir	= packConfig.dir || config.outputDir,
 		createOut	= false,
-		uglify		= packConfig.uglify === true,
+		uglify		= !!packConfig.uglify,
 		out,
 		tmp,i,str,mname;
 	
@@ -330,7 +341,8 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 		
 		res.push('//' + str + '\r\n');
 	});
-	res.push('\r\n\r\n');
+	//模板后面的2个空行，先去掉
+	//res.push('\r\n\r\n');
 
 	res.push('define.pack("', mname ,'",[],function(require, exports, module){\nvar tmpl = { ','\n');
 
@@ -474,6 +486,9 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 				code = uglifyJS(code);
 			}
 			fs.writeFileSync(out, code, 'UTF-8');
+
+			//补id补依赖
+			cdnPath.modify(out);
 		}
 	}else{
 		res = [];
@@ -502,7 +517,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 		outputJS	= config.outputJS,
 		outputDir	= packConfig.dir || config.outputDir,
 		createOut	= false,
-		uglify		= packConfig.uglify === true,
+		uglify		= !!packConfig.uglify,
 		packDependent		= [],
 		packDependentMap	= {},
 		sortRes,
@@ -559,14 +574,16 @@ function createJS(seajsRoot,modulePath,packConfig){
 		
 			str = path.normalize(str).replace(/\\/gi,'/');
 			str = str.replace(/.*\/([^\/]+\/src\/.+)$/,'$1');
-		
-			res.push('//' + str + '\r\n');	
+			
+			res.push('//' + str + '\r\n');
 		}
 		
 	});
-
-	res.push(config.beforeJS);
 	
+	var beforeJS = config.beforeJS.replace(/^[\ufeff\ufffe]/,'').replace(/\r\n|\r|\n/gmi,"\r\n");
+	if(!!beforeJS){
+		res.push(config.beforeJS);	
+	}
 	
 	//enclude packing module
 	js.forEach(function(n,i){
@@ -617,14 +634,17 @@ function createJS(seajsRoot,modulePath,packConfig){
 
 		str = str.replace(/(define\()[\W]*?(function)/gm,'define.pack("' + mname + '",' + JSON.stringify(dependent) + ',$2');
 
-		res.push(str,'\n');
+		res.push(str);
 
 
 	});
-
-	res.push(config.afterJS);
 	
-	moduleStr = moduleStr.replace('define(function','define(' + JSON.stringify(packDependent) + ',function');
+	var afterJS = config.afterJS.replace(/^[\ufeff\ufffe]/,'').replace(/\r\n|\r|\n/gmi,"\r\n");
+	if(!!afterJS){
+		res.push(config.afterJS);	
+	}
+	
+	moduleStr = moduleStr.replace('define\x28function','define\x28' + JSON.stringify(packDependent) + ',function');
 	
 	var finalCode = moduleStr + res.join('');
 	
@@ -640,6 +660,8 @@ function createJS(seajsRoot,modulePath,packConfig){
 				code,
 				'UTF-8'
 			);
+			//补id补依赖
+			cdnPath.modify(out);
 		}
 	}else{
 		logger.info('${o} is empty!!!',{o : out});
@@ -652,6 +674,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 	};
 
 }
+
 
 
 

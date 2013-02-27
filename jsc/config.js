@@ -25,10 +25,10 @@ this.excludeFile = /\.ignore\b/i;
 this.filter = /\.(?:js|htm|html)$/i;
 
 //将被添加到js文件合并的前面
-this.beforeJS = fs.readFileSync(__dirname + '/seajs.before.wrap');
+this.beforeJS = fs.readFileSync(__dirname + '/seajs.before.wrap','UTF-8');
 
 //将被添加到js文件合并的末尾
-this.afterJS = fs.readFileSync(__dirname + '/seajs.after.wrap');
+this.afterJS = fs.readFileSync(__dirname + '/seajs.after.wrap','UTF-8');
 
 //默认模块
 this.defaultModule = fs.readFileSync(__dirname + '/seajs.defaultModule.wrap','UTF-8');

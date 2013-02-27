@@ -18,6 +18,7 @@ var logger		= require('./logger')(__filename),
 	args		= {},								//进程参数
 	seajsRoot	= path.resolve(__dirname,config.seajsRoot),
 	jsc			= require('./jsc.js'),
+	cdnPath		= require('./cdn.path.js'),
 	modulePath,
 	undefined;
 
@@ -85,12 +86,16 @@ function work(args){
 			tmp = fs.readdirSync(modulePath);
 			
 			tmp.forEach(function(n,i){
-				if( fs.statSync(modulePath + '/' + n).isDirectory()){
+				var filePath = modulePath + '/' + n,
+					fileState = fs.statSync(filePath);
+				if( fileState.isDirectory()){
 					work({
 						m: args.m + '/' + n + '/',
 						all: 'yes',
 						listen: 'no'
 					});
+				}else if(fileState.isFile() && !/\/src\/.+/gmi.test(filePath)){
+					cdnPath.modify(filePath);
 				}
 			});
 			
