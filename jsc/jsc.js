@@ -16,6 +16,8 @@ var logger		= require('./logger')(__filename),
 	q			= new Queue(),
 	fs			= require("fs"),
 	path		= require('path'),
+	uglifyParser= require("./lib/uglify-js").parser,
+	uglifyProc	= require("./lib/uglify-js").uglify,
 	jscTimes	= 0,
 	beforeCode,//_config.js内设置对象属性:before{name:xxx.js}必须放在合并js文件最前的js代码，例如seajs，不设置则没有
 	undefined;
@@ -106,6 +108,7 @@ function createALL(seajsRoot,modulePath){
 		packConfig	= {},
 		outputALL	= config.outputALL,
 		createOut	= true,
+		uglify 		= true,
 		packConfig = packConfig || {},
 		outputHTML	= config.outputHTML,
 		packDependent,
@@ -197,9 +200,15 @@ function createALL(seajsRoot,modulePath){
 	
 	if(res.length){
 		if(createOut){
+			var code = (moduleStr + res.join('')).replace(/\r\n|\r|\n/gmi,"\r\n");
+			// UglifyJS
+			if(uglify) {
+				code = uglifyJS(code);
+			}
+			// 写入文件
 			fs.writeFileSync(
 				out,
-				finalCode.replace(/\r\n|\r|\n/gmi,"\r\n"),
+				code,
 				'UTF-8'
 			);
 		}
@@ -456,7 +465,12 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 	
 	if(js.length){
 		if(createOut){
-			fs.writeFileSync(out,res.join('').replace('.pack("./tmpl",[],' , '(').replace(/\r\n|\r|\n/gmi,"\r\n"),'UTF-8');
+			var code = res.join('').replace('.pack("./tmpl",[],' , '(').replace(/\r\n|\r|\n/gmi,"\r\n");
+			// UglifyJS
+			if(uglify) {
+				code = uglifyJS(code);
+			}
+			fs.writeFileSync(out, code, 'UTF-8');
 		}
 	}else{
 		res = [];
@@ -612,9 +626,14 @@ function createJS(seajsRoot,modulePath,packConfig){
 	
 	if(js.length){
 		if(createOut){
+			finalCode = finalCode.replace(/\r\n|\r|\n/gmi,"\r\n");
+			// UglifyJS
+			if(uglify) {
+				finalCode = uglifyJS(code);
+			}
 			fs.writeFileSync(
 				out,
-				finalCode.replace(/\r\n|\r|\n/gmi,"\r\n"),
+				code,
 				'UTF-8'
 			);
 		}

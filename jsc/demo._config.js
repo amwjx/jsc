@@ -9,7 +9,8 @@ define(function(require, exports, module){
 		
 		all: {
 			name: 'index.js',		//重新指定合并后的文件名
-			create: true			//生成
+			create: true,			//生成
+			uglify: true
 		},
 		
 		js: {
@@ -17,7 +18,8 @@ define(function(require, exports, module){
 			create: false,			//不生成
 			sort: function(arr){	//自定义排序
 				return arr;
-			}
+			},
+			uglify: true
 		},
 		
 		tmpl: {
