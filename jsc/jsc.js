@@ -108,7 +108,7 @@ function createALL(seajsRoot,modulePath){
 		packConfig	= {},
 		outputALL	= config.outputALL,
 		createOut	= true,
-		uglify		= packConfig.uglify === true,
+		uglify		= false,
 		packConfig = packConfig || {},
 		outputHTML	= config.outputHTML,
 		packDependent,
@@ -128,6 +128,8 @@ function createALL(seajsRoot,modulePath){
 		packConfig = require(modulePath + '/src/_config.js');
 		
 	}
+
+	uglify = !!packConfig.uglify;
 	
 	if(packConfig.tmpl){
 		outputHTML = packConfig.tmpl.name || config.outputHTML;
@@ -650,7 +652,6 @@ function createJS(seajsRoot,modulePath,packConfig){
 	};
 
 }
-
 
 
 
