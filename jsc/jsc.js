@@ -210,7 +210,7 @@ function createALL(seajsRoot,modulePath){
 			finalCode = finalCode.replace(/\r\n|\r|\n/gmi,"\r\n");
 			// UglifyJS
 			if(uglify) {
-				finalCode = uglifyJS(code);
+				finalCode = uglifyJS(finalCode);
 			}
 			// 写入文件
 			fs.writeFileSync(
@@ -653,7 +653,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 			finalCode = finalCode.replace(/\r\n|\r|\n/gmi,"\r\n");
 			// UglifyJS
 			if(uglify) {
-				finalCode = uglifyJS(code);
+				finalCode = uglifyJS(finalCode);
 			}
 			fs.writeFileSync(
 				out,
@@ -675,7 +675,19 @@ function createJS(seajsRoot,modulePath,packConfig){
 
 }
 
-
+/**
+ * UglifyJs 压缩文件
+ */
+function uglifyJS(code) {
+    var ast = uglifyParser.parse(code); // parse code and get the initial AST
+    ast = uglifyProc.ast_mangle(ast); // get a new AST with mangled names
+    ast = uglifyProc.ast_squeeze(ast); // get an AST with compression optimizations
+    var final_code = uglifyProc.gen_code(ast, {
+        beautify: true,
+        indent_level: 0
+    }); // compressed code here
+    return final_code;
+}
 
 
 
