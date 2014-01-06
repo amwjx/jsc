@@ -1,4 +1,3 @@
-
 /**
  * jsc：把模板转换成js，合并js
  * @author youkunhuang
@@ -108,9 +107,11 @@ this.modify = function(file){
 			return 'define\x28' + JSON.stringify(cpath.replace(/\.js$/,'')) + ',' + (dep || (JSON.stringify(dependentArr) + ','));
 		});
 		
-		res = res.replace(/\bdefine\(function\b/gmi,function($0,dep){
-			return 'define\x28' + JSON.stringify(cpath.replace(/\.js$/,'')) + ',' + (dep || (JSON.stringify(dependentArr) + ','));
-		});
+		if(text.indexOf('define.pack(') === -1){
+			res = res.replace(/.*?\bdefine\(function\b/gmi,function($0,dep){
+				return 'define\x28' + JSON.stringify(cpath.replace(/\.js$/,'')) + ',' + ((JSON.stringify(dependentArr) + ',function') || dep);
+			});
+		}
 		
 		if(res !== text){
 			fs.writeFileSync(file,res,'UTF-8');
