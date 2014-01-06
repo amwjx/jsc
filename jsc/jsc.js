@@ -1,4 +1,3 @@
-
 /**
  * jsc：把模板转换成js，合并js
  * @author youkunhuang
@@ -657,7 +656,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 			}
 			fs.writeFileSync(
 				out,
-				code,
+				finalCode,
 				'UTF-8'
 			);
 			//补id补依赖
