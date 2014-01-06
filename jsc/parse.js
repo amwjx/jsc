@@ -1,4 +1,3 @@
-
 /**
  * 把模板编译成对象
  * @author youkunhuang
@@ -53,8 +52,8 @@ function parse(opt){
 	text = fs.readFileSync(opt.file,'UTF-8');
 	
 	//去除utf-8文件头的BOM标记
-	text = text.replace(/^[\ufeff\ufffe]/,'');
-	text = text.replace(/\r\n|\r|\n/gmi,"\r\n");
+	text = text.replace(/^[\ufeff\ufffe]/g,'');
+	text = text.replace(/\r\n|\r|\n/g,"\r\n");
 	
 	//解析模板id
 	while(exec  =  regTmpl.exec(text)){

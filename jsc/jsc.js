@@ -1,4 +1,3 @@
-
 /**
  * jsc：把模板转换成js，合并js
  * @author youkunhuang
@@ -207,7 +206,7 @@ function createALL(seajsRoot,modulePath){
 	
 	if(res.length){
 		if(createOut){
-			finalCode = finalCode.replace(/\r\n|\r|\n/gmi,"\r\n");
+			finalCode = finalCode.replace(/\r\n|\r|\n/g,"\r\n");
 			// UglifyJS
 			if(uglify) {
 				finalCode = uglifyJS(finalCode);
@@ -360,8 +359,8 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 		str = fs.readFileSync(modulePath + '/src/' + n,'UTF-8');
 		
 		//去除utf-8文件头的BOM标记
-		str = str.replace(/^[\ufeff\ufffe]/,'');
-		str = str.replace(/\r\n|\r|\n/gmi,"\r\n");
+		str = str.replace(/[\ufeff\ufffe]/g,'');
+		str = str.replace(/\r\n|\r|\n/g,"\r\n");
 		
 		//处理script嵌套问题
 		(function(){
@@ -428,7 +427,7 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 							.slice(index,exec.index)
 								.replace(/\\/gmi,"\\\\")
 								.replace(/'/gmi,"\\'")
-								.replace(/\r\n|\r|\n/gmi,"\\r\\n\\\r\n")
+								.replace(/\r\n|\r|\n/g,"\\r\\n\\\r\n")
 					);
 					res.push("');\r\n");
 				}
@@ -455,7 +454,7 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 					.slice(index)
 						.replace(/\\/gmi,"\\\\")
 						.replace(/'/gmi,"\\'")
-						.replace(/\r\n|\r|\n/gmi,"\\r\\n\\\r\n")
+						.replace(/\r\n|\r|\n/g,"\\r\\n\\\r\n")
 			);
 			res.push("');\r\n");
 
@@ -480,7 +479,7 @@ function createTMPL(seajsRoot,modulePath,packConfig){
 	
 	if(js.length){
 		if(createOut){
-			var code = res.join('').replace('.pack("./tmpl",[],' , '(').replace(/\r\n|\r|\n/gmi,"\r\n");
+			var code = res.join('').replace('.pack("./tmpl",[],' , '(').replace(/\r\n|\r|\n/g,"\r\n");
 			// UglifyJS
 			if(uglify) {
 				code = uglifyJS(code);
@@ -566,7 +565,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 		if(packConfig.before){//找到需要前置的js如seajs，移除
 			var name = packConfig.before.name;
 			if(n && name && n.indexOf(name)>-1){
-				beforeCode = fs.readFileSync(modulePath + '/src/' + n,'UTF-8').replace(/^[\ufeff\ufffe]/,'').replace(/\r\n|\r|\n/gmi,"\r\n");
+				beforeCode = fs.readFileSync(modulePath + '/src/' + n,'UTF-8').replace(/[\ufeff\ufffe]/g,'').replace(/\r\n|\r|\n/g,"\r\n");
 				js.splice(i,1);	
 			}	
 		}else{
@@ -580,7 +579,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 		
 	});
 	
-	var beforeJS = config.beforeJS.replace(/^[\ufeff\ufffe]/,'').replace(/\r\n|\r|\n/gmi,"\r\n");
+	var beforeJS = config.beforeJS.replace(/[\ufeff\ufffe]/g,'').replace(/\r\n|\r|\n/g,"\r\n");
 	if(!!beforeJS){
 		res.push(config.beforeJS);	
 	}
@@ -614,8 +613,8 @@ function createJS(seajsRoot,modulePath,packConfig){
 		str = fs.readFileSync(modulePath + '/src/' + n,'UTF-8');
 
 		//去除utf-8文件头的BOM标记
-		str = str.replace(/^[\ufeff\ufffe]/,'');
-		str = str.replace(/\r\n|\r|\n/gmi,"\r\n");
+		str = str.replace(/[\ufeff\ufffe]/g,'');
+		str = str.replace(/\r\n|\r|\n/g,"\r\n");
 
 		//扫描依赖关系
 		removeComments(str).replace(/[^.]\brequire\s*\(\s*['"]?([^'")]*)/g,function($0,id){
@@ -639,7 +638,7 @@ function createJS(seajsRoot,modulePath,packConfig){
 
 	});
 	
-	var afterJS = config.afterJS.replace(/^[\ufeff\ufffe]/,'').replace(/\r\n|\r|\n/gmi,"\r\n");
+	var afterJS = config.afterJS.replace(/[\ufeff\ufffe]/g,'').replace(/\r\n|\r|\n/g,"\r\n");
 	if(!!afterJS){
 		res.push(config.afterJS);	
 	}
@@ -650,14 +649,14 @@ function createJS(seajsRoot,modulePath,packConfig){
 	
 	if(js.length){
 		if(createOut){
-			finalCode = finalCode.replace(/\r\n|\r|\n/gmi,"\r\n");
+			finalCode = finalCode.replace(/\r\n|\r|\n/g,"\r\n");
 			// UglifyJS
 			if(uglify) {
 				finalCode = uglifyJS(finalCode);
 			}
 			fs.writeFileSync(
 				out,
-				code,
+				finalCode,
 				'UTF-8'
 			);
 			//补id补依赖
